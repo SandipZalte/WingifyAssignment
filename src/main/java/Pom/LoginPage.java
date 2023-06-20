@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import Base.BaseClass;
+import utility.Wait;
 
 public class LoginPage extends BaseClass {
 
@@ -48,11 +49,13 @@ public class LoginPage extends BaseClass {
 //	Page Action
 
 	public String ValidateLoginPageTitle() {
+		
 		return driver.getTitle();
 
 	}
 
 	public boolean ValidateLogo() {
+		
 		return logo.isDisplayed();
 
 	}
@@ -60,7 +63,9 @@ public class LoginPage extends BaseClass {
 	public HomePage loginWithValidCreditals(String un, String pwd) {
 		username.sendKeys(un);
 		password.sendKeys(pwd);
+		Wait.waitVisibilityOfAllElements(10, loginbutton);
 		loginbutton.click();
+		
 		return new HomePage();
 	}
 
@@ -68,6 +73,7 @@ public class LoginPage extends BaseClass {
 		username.sendKeys(un);
 		password.sendKeys(pwd);
 		checkbox.click();
+		Wait.waitElementToBeClickable(10, checkbox);
 		loginbutton.click();
 		return new HomePage();
 	}
@@ -91,15 +97,18 @@ public class LoginPage extends BaseClass {
 	}
 
 	public boolean displayTwitterImg() {
+		Wait.waitVisibilityOfElementLocated(10, twitter);
 		return twitter.isDisplayed();
 	}
 
 	public boolean displayFacebookImg() {
+		Wait.waitVisibilityOfElementLocated(10, fb);
 		return fb.isDisplayed();
 
 	}
 
 	public boolean displaylinkedinImg() {
+		Wait.waitVisibilityOfElementLocated(10, in);
 		return in.isDisplayed();
 	}
 

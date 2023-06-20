@@ -23,6 +23,7 @@ import Base.BaseClass;
 import Pom.HomePage;
 import Pom.LoginPage;
 import bsh.util.Util;
+import utility.Wait;
 
 public class HomePageTest extends BaseClass {
 	// Global Variable
@@ -54,6 +55,7 @@ public class HomePageTest extends BaseClass {
 	@Test(priority = 0)
 	public void testHomePagelogo() {
 		Boolean flag = homePage.ValidateLogo();
+		
 		Assert.assertTrue(flag);
 
 	}
@@ -66,7 +68,7 @@ public class HomePageTest extends BaseClass {
 		Assert.assertEquals(Act, Exp, "Home Page Title is Mismatch");
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2 ,dependsOnMethods ="verifyHomePageTitleTest" )
 	public void testUserNameText() {
 
 		String Exp = homePage.UserNameText();
@@ -75,13 +77,13 @@ public class HomePageTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3 ,dependsOnMethods ="testUserNameText")
 	public void testTransactionsTable() {
 		Boolean flag = homePage.transactionsTable();
 		Assert.assertTrue(flag);
 	}
 
-	@Test(priority = 4)
+	@Test(priority = 4 ,dependsOnMethods="testTransactionsTable")
 	public void AmountColValueTest() {
 		String[] actualAmtCol = homePage.getColEle();
 
@@ -95,7 +97,7 @@ public class HomePageTest extends BaseClass {
 				"Amount Column Value is Not present OR correct Amount Column Value");
 	}
 
-	@Test(priority = 5)
+	@Test(priority = 5 ,dependsOnMethods ="testTransactionsTable")
 	public void sortAmtColValueTest() {
 		/*
 		 * Sort using Utility class Method Expected Sorted value

@@ -1,26 +1,24 @@
 package Pom;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import org.openqa.selenium.WebDriver;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.asserts.*;
 
 import Base.BaseClass;
-import utility.CompareAndSort;
+import utility.Util;
+import utility.Wait;
 
 public class HomePage extends BaseClass {
 	
 	//Page Factory or Object Repository
 	@FindBy(xpath = "//div[@class='logo-element']")
 	private WebElement logo;
+	//a[@class="logo"]
 	@FindBy(xpath = "//table[@id='transactionsTable']")
 	private WebElement transactionsTable;
 	@FindBy(id = "amount")
@@ -41,15 +39,18 @@ public class HomePage extends BaseClass {
 
 	// Page Action
 	public String verfiyHomePageTitle() {
+		
 		return driver.getTitle();
 	}
 
 	public boolean ValidateLogo() {
+		
 		return logo.isDisplayed();
 
 	}
 
 	public String UserNameText() {
+		
 		return username.getText();
 
 	}
@@ -57,12 +58,14 @@ public class HomePage extends BaseClass {
 	
 	public boolean transactionsTable() { // validate Tran.Table
 		boolean table = transactionsTable.isDisplayed();
+		
 		return table;
 
 	}
 
 	public String[] getColEle() { // get as it Amt Col Ele value
 		String[] ColEle = new String[amtColEle.size()];
+		Wait.waitUntilvisibilityOfAllElements(30, amtColEle);
 		int len=amtColEle.size();
 
 		for (int i = 0; i < len; i++) {
@@ -73,12 +76,14 @@ public class HomePage extends BaseClass {
 	}
 
 	public void clickTheAmt() { // Click the Amt Header
+		
 		amountEle.click();
+		Wait.waitUntilvisibilityOfAllElements(20, amtColEle);
 	}
+	// Get the Actual Sorted Col Ele
 
-	public String[] getActualSortedColEle() { // Get the Actual Sorted Col Ele
-		String[] actual;
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10));
+	public String[] getActualSortedColEle() { 		String[] actual;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(20));
 		wait.until(ExpectedConditions.visibilityOfAllElements(transactionsTable));
 
 		// get All the Element and Store in List
@@ -95,42 +100,12 @@ public class HomePage extends BaseClass {
 		return actual;
 	}
 
-	public String[] getExpectedColEleSorted() {// Sort as Expected Col Ele
-		String[] expected = new String[amtColEle.size()];
 
-		for (int i = 0; i < amtColEle.size(); i++) {
-			expected[i] = amtColEle.get(i).getText();
-		}
-
-		for (String j : expected) {
-//			System.out.println("Unsorted List ->");
-//			System.out.println(j);
-		}
-
-		Arrays.sort(expected, new Comparator<String>() {
-
-			public int compare(String o1, String o2) {
-				String no1 = o1.replaceAll("[a-zA-Z,\\s]", "");
-				String no2 = o2.replaceAll("[a-zA-Z, \\s]", "");
-				double num1 = Double.parseDouble(no1);
-				double num2 = Double.parseDouble(no2);
-
-				if (num1 < num2)
-					return -1;
-				else if (num1 > num2)
-					return 1;
-				return 0;
-			}
-		});
-		return expected;
-
-		// System.out.println("Expected List "+Arrays.toString(expected));
-
-	
-	}
 	public String[] getSortedColumnValue() {
+		Wait.waitUntilvisibilityOfAllElements(30, amtColEle);
 		String[] list = new String[amtColEle.size()];
-		list=CompareAndSort.Comparator_To_SORT(amtColEle);
+		
+		list=Util.Comparator_To_SORT(amtColEle);
 		return list;
 		
 		

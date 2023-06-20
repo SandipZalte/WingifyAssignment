@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Wingify Application Automation Assignment Test Suite" guice-stage="DEVELOPMENT" parallel="tests" thread-count="5">
+<suite name="WingifyAssignmentTest"  >
 	<listeners>
-		<listener class-name="utility.ExtentListenerClass" />
+		<listener class-name="utility.ExtentListenerClass"  />
 		<listener class-name="ExtentReportListener.ExtentReporterNG" />
 	</listeners>
-	<test name="Para Bank Test Cases" > <!-- thread-count="5" -->
+	<test name="Test Cases" parallel="false" thread-count="2"  >
+		<!-- thread-count="5" -->
 		<classes>
 			<class name="test.HomePageTest" />
-			<class name="test.LoginPageTest" />
+			 <class name="test.LoginPageTest" />  
 		</classes>
 	</test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

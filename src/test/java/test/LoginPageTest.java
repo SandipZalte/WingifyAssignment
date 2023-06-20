@@ -17,6 +17,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import Base.BaseClass;
 import Pom.HomePage;
 import Pom.LoginPage;
+import utility.Wait;
 
 
 public class LoginPageTest extends BaseClass {
@@ -45,6 +46,7 @@ public class LoginPageTest extends BaseClass {
 	public void testLoginPageTitle() {
 		String Exp = loginPage.ValidateLoginPageTitle();
 		String Act = "Demo App";
+		Wait.waitVisibilityOftitleIs(5, Act);
 		Assert.assertEquals(Act, Exp, "Title Not Match");
 
 	}
@@ -55,14 +57,14 @@ public class LoginPageTest extends BaseClass {
 		Assert.assertTrue(ExpLogo);
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, dependsOnMethods = "testLoginPageLogo")
 	public void testLoginWithValidCreditals() {
 		String uername = prop.getProperty("Username");
 		String password = prop.getProperty("Password");
 		homePage = loginPage.loginWithValidCreditals(uername, password);
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 3,dependsOnMethods = "testLoginPageLogo")
 	public void testLoginValidCreditalsWithCheckbox() {
 
 		String uername = prop.getProperty("Username");
@@ -71,7 +73,7 @@ public class LoginPageTest extends BaseClass {
 
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 4,dependsOnMethods = "testLoginPageLogo")
 	public void testLoginWithoutCreditals() {
 
 		String Act = loginPage.loginWithoutCreditals();
@@ -80,7 +82,7 @@ public class LoginPageTest extends BaseClass {
 
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 5,dependsOnMethods = "testLoginPageLogo")
 	public void testLoginWithOnlyUsername() {
 
 		String Exp = loginPage.loginWithOnlyUsername(prop.getProperty("Username"));
@@ -89,28 +91,29 @@ public class LoginPageTest extends BaseClass {
 
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 6,dependsOnMethods = "testLoginPageLogo")
 	public void testLoginWithOnlyPassword() {
 
 		String Exp = loginPage.loginWithOnlyPassword(prop.getProperty("Password"));
 		String Act = "Username must be present";
+		
 		Assert.assertEquals(Act, Exp, "Error Msg is Missmatch");
 
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 7,dependsOnMethods = "testLoginPageLogo")
 	public void testDisplayTwitterImg() {
 		boolean Exp = loginPage.displayTwitterImg();
 		Assert.assertTrue(Exp);
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 8,dependsOnMethods = "testLoginPageLogo")
 	public void testDisplayFacebookImg() {
 		boolean Exp = loginPage.displayFacebookImg();
 		Assert.assertTrue(Exp);
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 9, dependsOnMethods = "testLoginPageLogo")
 	public void TestDisplaylinkedinImg() {
 		boolean Exp = loginPage.displaylinkedinImg();
 		Assert.assertTrue(Exp);
